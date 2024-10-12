@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Users</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f6f8fa;
+            color: #24292e;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #24292e;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        .container {
+            width: 35%;
+            margin: 2rem auto;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(27,31,35,0.12), 0 8px 24px rgba(27,31,35,0.12);
+        }
+        .user-card {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e1e4e8;
+            padding: 1rem 0;
+        }
+        .user-card:last-child {
+            border-bottom: none;
+        }
+        .user-card p {
+            margin: 0;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .user-card div {
+            display: flex;
+            align-items: center;
+        }
+        .user-card a {
+            text-decoration: none;
+            margin-right: 1rem;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: white;
+        }
+        .user-card a.detail-button {
+            background-color: #0366d6;
+        }
+        .user-card a.detail-button:hover {
+            background-color: #0356b6;
+        }
+        .user-card a.update-button {
+            background-color: #f39c12;
+        }
+        .user-card a.update-button:hover {
+            background-color: #e38c10;
+        }
+        form {
+            display: inline;
+        }
+        input[type="submit"] {
+            background-color: #d73a49;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        input[type="submit"]:hover {
+            background-color: #c9303e;
+        }
+        .add-user {
+            display: block;
+            margin: 4rem auto;
+            text-align: center;
+        }
+        .add-user a {
+            background-color: #28a745;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+        .add-user a:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>User Management</h1>
+</header>
+<div class="container">
+    <th:block th:each="user : ${users}">
+        <div class="user-card">
+            <p th:text="${user.getNickname()}">user</p>
+            <div>
+                <a th:href="@{/uManager/user(nickname=${user.getNickname()})}" class="detail-button">detail</a>
+                <a th:href="@{/uManager/edit(nickname=${user.getNickname()})}" class="update-button">update</a>
+                <form method="post" th:action="@{/uManager/delete(nickname=${user.getNickname()})}">
+                    <input type="submit" value="delete"/>
+                </form>
+            </div>
+        </div>
+    </th:block>
+    <div class="add-user">
+        <a href="http://localhost:8080/uManager/new">add new user</a>
+    </div>
+</div>
+</body>
+</html>
